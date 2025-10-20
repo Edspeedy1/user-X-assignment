@@ -1,7 +1,7 @@
-              # Foobar
+# Foobar
 This project is a Java-based interactive fish tank simulation created with Processing. With AI-driven behaviours including wandering, food seeking, obstacle avoidance, and evading predators (the mouse).
 
-          ## Installation
+## Installation
 1. Download and Install Processing.
 2. Create a new sketch folder.
 3. Copy all .pde files and the fishpics/ folder into that sketch folder.
@@ -9,10 +9,10 @@ This project is a Java-based interactive fish tank simulation created with Proce
 5. Press Run to start simulation.
 
 
-          ## Video demo
+## Video demo
    
 
-          ## Contributors 
+ ## Contributors 
 
    Alexy Pichette         - 100822470             
    Eric De Leenheer       - 100869527
