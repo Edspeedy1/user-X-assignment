@@ -1,4 +1,4 @@
-# Foobar
+# 
 This project is a Java-based interactive fish tank simulation created with Processing. With AI-driven behaviours including wandering, food seeking, obstacle avoidance, and evading predators (the mouse).
 
 ## Installation
