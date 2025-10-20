@@ -5,7 +5,7 @@ This project is a Java-based interactive fish tank simulation created with Proce
 1. Download and Install Processing.
 2. Create a new sketch folder.
 3. Copy all .pde files and the fishpics/ folder into that sketch folder. (Can use the git clone command)
-4. Open Fish.pde in Processing.
+4. Open Fish_Sketch.pde in Processing.
 5. Press Run to start simulation.
 
 
