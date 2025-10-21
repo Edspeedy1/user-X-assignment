@@ -13,9 +13,9 @@ class FishBrain {
   // persistent wander heading
   PVector wanderDir = PVector.random2D();
 
-  // Predator (mouse) avoidance settings
-  float predatorRadius = 140;   // how far the fish sense the cursor
-  float predatorBoost  = 1.6;   // extra speed when very close
+  // Mouse avoidance settings
+  float predatorRadius = 140;  // how far the fish sense the cursor
+  float predatorBoost  = 1.6;  // extra speed when very close
 
   FishBrain(Fish f) {
     this.fish = f;
@@ -47,13 +47,14 @@ class FishBrain {
     PVector flee = avoidPredator();
     if (flee.magSq() > 0) return flee;
 
-    // 2) if there's food, go for the closest one
+    // if there's food, go for the closest one
     if (foodList != null && !foodList.isEmpty()) {
       Food nearest = findNearestFood();
-      if (nearest != null) {
-        target = nearest.position.copy();
+      if (nearest != null) {  // food in range
+        this.target = nearest.position.copy();
         PVector move = seekTarget();
 
+        // if the food is too close, eat it
         float dist = PVector.dist(fish.position, nearest.position);
         if (dist < nearest.size + 5) {
           foodList.remove(nearest);
@@ -62,12 +63,14 @@ class FishBrain {
       }
     }
 
-    // 3) Otherwise, follow current behavior
+    // Otherwise, follow current behavior
     if ("seeking".equals(behavior)) {
       return seekTarget();
+
     } else if ("avoiding".equals(behavior)) {
       PVector avoid = avoidObstacles();
       return (avoid.magSq() > 0) ? avoid : wander();
+
     } else {
       return wander();
     }
@@ -84,7 +87,7 @@ class FishBrain {
     ranAway = ranAway + 1; 
     
     if (ranAway > 0 && ranAway < runAwayCooldown){ 
-      // ran away too soon and isnt scared anymore
+      // ran away too soon and isn't scared anymore
       // prevents weird jitters
       return new PVector(0, 0);
     }
@@ -113,51 +116,65 @@ class FishBrain {
   }
 
   PVector seekTarget() {
+    // if no target, pick a new one
     if (target == null) newTarget();
     PVector toTarget = PVector.sub(target, fish.position);
+
+    // if arrived at target, pick a new one
     float d = toTarget.mag();
     if (d < 1) {
-      target.set(random(width), random(height));
+      newTarget();
       return wander();
     }
+    // normalize target direction
     toTarget.normalize();
     float maxSpeed = fish.speed;
     float desiredSpeed = (d < 80) ? map(d, 0, 80, 0, maxSpeed) : maxSpeed;
+    // move towards target
     return toTarget.mult(desiredSpeed);
   }
 
   PVector wander() {
+    // randomly pick a direction
     PVector jitter = PVector.random2D().mult(0.12);
     wanderDir.add(jitter);
     if (wanderDir.magSq() == 0) wanderDir = PVector.random2D();
     wanderDir.normalize().mult(fish.speed);
+    // move randomly
     return wanderDir.copy();
   }
 
   PVector avoidObstacles() {
+    // if no obstacles, do nothing
     if (obstacles == null || obstacles.isEmpty()) return new PVector(0, 0);
     PVector avoidForce = new PVector(0, 0);
+    // for each obstacle
     for (Obstacle obs : obstacles) {
       if (obs == null) continue;
       float dist = PVector.dist(fish.position, obs.position);
+      // if too close
       if (dist > 0 && dist < obs.size) {
         PVector away = PVector.sub(fish.position, obs.position);
         away.normalize();
         away.mult((obs.size - dist) / obs.size);
+        // add to avoid force
         avoidForce.add(away);
       }
     }
+    // normalize and scale
     if (avoidForce.magSq() > 0) {
       avoidForce.normalize().mult(fish.speed);
     }
     return avoidForce;
   }
 
+  // function to find the nearest food
   Food findNearestFood() {
     if (foodList == null || foodList.isEmpty()) return null;
-    float foodRadius = 300;
+    float foodRadius = 300;  // search radius
     Food nearest = null;
     float minDist = Float.MAX_VALUE;
+    // loop through all foods and return the closest within radius
     for (Food f : foodList) {
       float d = PVector.dist(fish.position, f.position);
       if (d < minDist && d < foodRadius) {

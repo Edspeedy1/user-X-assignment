@@ -1,6 +1,6 @@
 class Obstacle {
   PVector position;
-  float size; // interpret as RADIUS
+  float size; // radius
 
   Obstacle(PVector position, float size) {
     this.position = position;

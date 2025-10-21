@@ -4,30 +4,30 @@ ArrayList<Food> foodList = new ArrayList<Food>();
 PImage[] fishImages;
 PImage backdrop;
 PImage scaledBackdrop;
-PImage obsticleImg;
+PImage obstacleImg;
 
 int fishCount = 20;
 
 void setup() {
-  size(800, 600, P2D); // P2D is for transparent PNG
+  size(800, 600, P2D); // P2D for transparent PNG
   // load fish images
-  int fishImageCount = 23; // this number can be changed depending on number of fish
+  int fishImageCount = 23;
   fishImages = new PImage[fishImageCount];
   
-  int crop = 10;           // pixels to be removed (each side)
-  int displayWidth = 40;   // desired width
-  int displayHeight = 0;   // maintain aspect ratio
+  int crop = 10; // pixels to be removed (each side)
+  int displayWidth = 40;  // desired width
+  int displayHeight = 0;  // maintain aspect ratio
   
   backdrop = loadImage("aquarium.jpeg");
-  obsticleImg = loadImage("rock.png");
+  obstacleImg = loadImage("rock.png");
   
   for (int i = 0; i < fishImageCount; i++) {
-     PImage original = loadImage("fishpics/" + i + ".png");   // load the image
+     PImage original = loadImage("fishpics/" + i + ".png");  // load images
      int newWidth = original.width - crop * 2;                 
      int newHeight = original.height - crop * 2;   
      PImage cropped = original.get(crop, crop, newWidth, newHeight);  // crop
      cropped.resize(displayWidth, displayHeight);
-     fishImages[i] = cropped;                                 // store in array
+     fishImages[i] = cropped;  // store in array
   }
   // Create some fish
   for (int i = 0; i < fishCount; i++) {
@@ -41,8 +41,7 @@ void setup() {
 }
 
 void draw() {
-  background(173, 216, 230); // changes the background color, currently set to light blue
-  //scaledBackdrop = scale()
+  background(173, 216, 230);
   image(backdrop, width/2, height/2, width, height);
 
   // display food
@@ -55,13 +54,13 @@ void draw() {
     f.brain.setObstacles(obstacles);  // Fish brain knows about the obstacles
     f.brain.setFood(foodList);
     f.update();  // Update the fish's brain
-    f.display();
+    f.display();  // Draw the fish
   }
 
   // Display obstacles
   fill(220,180,190);
   for (Obstacle o : obstacles) {
-    o.display(obsticleImg);
+    o.display(obstacleImg);
   }
 }
 
