@@ -16,7 +16,7 @@ This project is a Java-based interactive fish tank simulation created with Proce
 
    Alexy Pichette         - 100822470             
    Eric De Leenheer       - 100869527
-
+   Vandan Patel           - 100870516
 
 
 
@@ -26,3 +26,6 @@ This project is a Java-based interactive fish tank simulation created with Proce
    Eric De Leenheer - made the fish images, as well as images for the background and obsticals, built out the initial framework and did most of the setup
                       like creating the fish and obstical arrays, made the different fish movement patterens and reduced some of the fish's jittering. 
 
+  Vandan Patel - worked on giving the fish a direction vector for more natural acceleration and reducing their over all jittering, also worked
+                 on having the fish avoid the cursor and fixed some of the fish's brain logic.
+   
